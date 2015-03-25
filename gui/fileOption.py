@@ -287,11 +287,6 @@ class FileOption(object):
         
         return True
 
-    def loginGoogleDrive(self):
-        
-        return 0
-        
-
     def createInitialsFoldersAndFiles(self):
         if not os.path.exists('Vestimentas'):
             path = os.path.join(gobstones_folder(), 'Vestimentas')
@@ -312,4 +307,4 @@ class FileOption(object):
         return filename
 
     def loginGoogleDrive(self):
-        return 0
+        return None

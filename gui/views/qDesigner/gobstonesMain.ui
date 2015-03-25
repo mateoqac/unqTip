@@ -81,6 +81,7 @@
    <addaction name="actionCheck"/>
    <addaction name="separator"/>
    <addaction name="actionManual"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -88,7 +89,7 @@
      <x>0</x>
      <y>0</y>
      <width>703</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -395,8 +396,8 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/ayuda/about.png</normaloff>icons/ayuda/about.png</iconset>
+    <iconset resource="../resources.qrc">
+     <normaloff>:/about.png</normaloff>:/about.png</iconset>
    </property>
    <property name="text">
     <string>Acerca de...</string>

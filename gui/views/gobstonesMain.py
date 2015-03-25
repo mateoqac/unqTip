@@ -212,8 +212,7 @@ class Ui_MainWindow(object):
                                             ('actionLoadBoard'))
         
         self.actionGoogleDrive = QtGui.QAction(MainWindow)
-        icon21=QtGui.QIcon(":/drive.png")  
-        self.actionGoogleDrive.setIcon(icon21)
+        self.actionGoogleDrive.setIcon(QtGui.QIcon(":/drive.png") )
         self.actionGoogleDrive.setObjectName(_fromUtf8
                                             ('actionGoogleDrive'))
         
