@@ -9,12 +9,14 @@ import views.resources
 sys.path.append('..')
 from commons.i18n import *
 from commons.utils import root_path, user_path, clothing_for_file_exists, clothing_dir_for_file
-
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
 
 def gobstones_folder():
     return os.path.join(user_path(), "gobstones")
 
 class FileOption(object):
+    DRIVE=None
 
     def __init__(self, mainWindow):        
         self.mainW = mainWindow
@@ -223,7 +225,10 @@ class FileOption(object):
                 return self.saveAsFileDialog()
             else:
                 modFile = open(self.moduleFile, 'w')
-                modFile.write(self.mainW.ui.textEditFile.toPlainText().toUtf8())
+                body=self.mainW.ui.textEditFile.toPlainText().toUtf8()
+                modFile.write(body)
+                (filep, filen) = os.path.split(str(self.moduleFile))
+                self.saveG(filen, body)
                 modFile.close()
                 self.mainW.ui.textEditFile.document().setModified(False)
                 return True
@@ -247,15 +252,20 @@ class FileOption(object):
             (filep, filen) = os.path.split(str(filename))
             if filen == "Biblioteca.gbs" or filen == "Biblioteca":
                 QMessageBox.question(self.mainW, i18n('Error saving the file'),
-                    i18n('The file name dont be equals to library') + '\n'
+                    i18n('The file name do not be equals to library') + '\n'
                         + i18n(''),
                         QMessageBox.Ok)
                 return False
             else:
                 filename = self.addExtension(filename)
+                (filep, filen) = os.path.split(str(filename))
                 self.moduleFile = filename
                 myFile = open(filename, 'w')
-                myFile.write(self.mainW.ui.textEditFile.toPlainText().toUtf8())
+                body=self.mainW.ui.textEditFile.toPlainText().toUtf8()
+                myFile.write(body)
+                #add to save in Google Drive
+                self.saveG(filen,body)
+                
                 self.setCurrentPathDirectory(os.path.dirname(filename))
                 myFile.close()
                 self.mainW.ui.textEditFile.document().setModified(False)
@@ -281,7 +291,8 @@ class FileOption(object):
                 self.mainW.ui.tabWidgetEditors.setTabText(1, self.addExtension(filen))
             else:
                 self.saveLibrary()
-                
+        
+               
         self.createInitialsFoldersAndFiles()
         self.updateClothingOptions()
         
@@ -307,4 +318,15 @@ class FileOption(object):
         return filename
 
     def loginGoogleDrive(self):
-        return None
+        if not self.DRIVE :
+            gauth = GoogleAuth()
+            gauth.LocalWebserverAuth()
+
+            self.DRIVE= GoogleDrive(gauth)
+        
+    def saveG(self,title,body):
+        
+        if not self.existsG(title):
+            fileg = self.DRIVE.CreateFile({'title': title})
+            fileg.SetContentString(str(body))
+            fileg.Upload()
