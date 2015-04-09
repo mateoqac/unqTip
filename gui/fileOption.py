@@ -17,7 +17,8 @@ def gobstones_folder():
 
 class FileOption(object):
     DRIVE=None
-
+    files = dict()
+    
     def __init__(self, mainWindow):        
         self.mainW = mainWindow
         self.moduleFile = None
@@ -324,9 +325,15 @@ class FileOption(object):
 
             self.DRIVE= GoogleDrive(gauth)
         
-    def saveG(self,title,body):
-        
-        if not self.existsG(title):
+    def saveG(self,title,body,idf=None):
+        if idf is None:
             fileg = self.DRIVE.CreateFile({'title': title})
             fileg.SetContentString(str(body))
             fileg.Upload()
+            files[fileg['id']]=title
+        else:
+            file_list = drive.ListFile({'q': "title={} and trashed=false".format(title)}).GetList()
+            for file1 in file_list:
+                if file1['id']==idf:
+                    file1.SetContentString(str(body))
+                    file1.Upload()
