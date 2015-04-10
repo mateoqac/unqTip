@@ -17,7 +17,7 @@ def gobstones_folder():
 
 class FileOption(object):
     DRIVE=None
-    files = dict()
+    FILES_ACT = dict()
     
     def __init__(self, mainWindow):        
         self.mainW = mainWindow
@@ -73,8 +73,12 @@ class FileOption(object):
             If not exist the Biblioteca.gbs , then create a new file library
         '''
         if not os.path.exists('Biblioteca.gbs'):
+            
             fileLibrary = open('Biblioteca.gbs', 'w')
             fileLibrary.write(i18n('-- New Library'))
+            body=i18n('-- New Library')
+            if  self.DRIVE is not None:
+                self.saveG('Biblioteca.gbs',body)
             fileLibrary.close()
         fileLibrary = open('Biblioteca.gbs')
         self.libraryFile = os.path.abspath(str('Biblioteca.gbs'))
@@ -229,7 +233,8 @@ class FileOption(object):
                 body=self.mainW.ui.textEditFile.toPlainText().toUtf8()
                 modFile.write(body)
                 (filep, filen) = os.path.split(str(self.moduleFile))
-                self.saveG(filen, body)
+                if  self.DRIVE is not None:
+                    self.saveG(filen, body,self.FILES_ACT[filen])
                 modFile.close()
                 self.mainW.ui.textEditFile.document().setModified(False)
                 return True
@@ -238,7 +243,11 @@ class FileOption(object):
                 return self.saveAsFileDialog()
             else:
                 modLibrary = open(self.libraryFile, 'w')
-                modLibrary.write(self.mainW.ui.textEditLibrary.toPlainText().toUtf8())
+                body=self.mainW.ui.textEditLibrary.toPlainText().toUtf8()
+                modLibrary.write(body)
+                (filep, filen) = os.path.split(str(self.libraryFile))
+                if  self.DRIVE is not None:
+                    self.saveG(filen, body,self.FILES_ACT[filen])
                 modLibrary.close()
                 self.mainW.ui.textEditLibrary.document().setModified(False)
                 return True
@@ -265,7 +274,8 @@ class FileOption(object):
                 body=self.mainW.ui.textEditFile.toPlainText().toUtf8()
                 myFile.write(body)
                 #add to save in Google Drive
-                self.saveG(filen,body)
+                if  self.DRIVE is not None:
+                    self.saveG(filen,body)
                 
                 self.setCurrentPathDirectory(os.path.dirname(filename))
                 myFile.close()
@@ -308,7 +318,10 @@ class FileOption(object):
 
     def saveLibrary(self):
         libFile = open(self.libraryFile, 'w')
-        libFile.write(self.mainW.ui.textEditLibrary.toPlainText().toUtf8())
+        body=self.mainW.ui.textEditLibrary.toPlainText().toUtf8()
+        libFile.write(body)
+        if  self.DRIVE is not None:
+            self.saveG('Biblioteca.gbs',body)
         libFile.close()
         self.mainW.ui.textEditLibrary.document().setModified(False)
 
@@ -319,20 +332,21 @@ class FileOption(object):
         return filename
 
     def loginGoogleDrive(self):
-        if not self.DRIVE :
+        if  self.DRIVE is None:
             gauth = GoogleAuth()
             gauth.LocalWebserverAuth()
-
             self.DRIVE= GoogleDrive(gauth)
+
         
-    def saveG(self,title,body,idf=None):
+    def saveG(self,title,body=None,idf=None):
         if idf is None:
             fileg = self.DRIVE.CreateFile({'title': title})
-            fileg.SetContentString(str(body))
+            if body is None:
+                fileg.SetContentString('')
             fileg.Upload()
-            files[fileg['id']]=title
+            self.FILES_ACT[title]=fileg['id']
         else:
-            file_list = drive.ListFile({'q': "title={} and trashed=false".format(title)}).GetList()
+            file_list = self.DRIVE.ListFile({'q': "title='{}' and trashed=false".format(title)}).GetList()
             for file1 in file_list:
                 if file1['id']==idf:
                     file1.SetContentString(str(body))
