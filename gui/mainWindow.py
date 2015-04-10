@@ -193,6 +193,11 @@ class MainWindow(QtGui.QMainWindow):
     def loginGoogleDrive(self):
         self.fileOption.loginGoogleDrive()
 
+    def widgetGoogleDrive(self):
+        return self.ui.widgetGoogleDrive.isCheckable()
+        
+    
+
     def saveAsFileDialog(self):
         self.fileOption.saveAsFileDialog()
 

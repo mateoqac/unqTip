@@ -4,6 +4,7 @@ import sys
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 from PyQt4.QtGui import QMessageBox
+from PyQt4.QtGui import QCheckBox
 import PyQt4
 import views.resources
 sys.path.append('..')
@@ -24,6 +25,8 @@ class FileOption(object):
         self.moduleFile = None
         self.libraryFile = None
         self.initGobstonesFolder()
+        
+        
 
     def initGobstonesFolder(self):
         if not os.path.exists(gobstones_folder()):
@@ -332,10 +335,12 @@ class FileOption(object):
         return filename
 
     def loginGoogleDrive(self):
+        
         if  self.DRIVE is None:
             gauth = GoogleAuth()
             gauth.LocalWebserverAuth()
             self.DRIVE= GoogleDrive(gauth)
+        
 
         
     def saveG(self,title,body=None,idf=None):

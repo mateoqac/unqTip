@@ -215,6 +215,10 @@ class Ui_MainWindow(object):
         self.actionGoogleDrive.setIcon(QtGui.QIcon(":/drive.png") )
         self.actionGoogleDrive.setObjectName(_fromUtf8
                                             ('actionGoogleDrive'))
+        self.widgetGoogleDrive=QtGui.QCheckBox(MainWindow)
+        self.widgetGoogleDrive.setObjectName(_fromUtf8
+                                            ('widgetGoogleDrive'))
+        self.widgetGoogleDrive.setText('GoogleDrive')
         
         self.toolBar.addAction(self.actionChangeLang)
         self.toolBar.addAction(self.actionNewFile)
@@ -234,7 +238,9 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionManual)
         self.toolBar.addAction(self.actionAbout)
         self.toolBar.addSeparator()
-        self.toolBar.addAction(self.actionGoogleDrive)
+        #self.toolBar.addAction(self.actionGoogleDrive)
+        self.toolBar.addWidget(self.widgetGoogleDrive)
+        
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionChangeLang)
         self.menuFile.addAction(self.actionNewFile)
