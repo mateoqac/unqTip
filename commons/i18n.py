@@ -103,6 +103,8 @@ ES = {
 
     'Manual': 'Manual',
     
+    'Save into': 'Guardando',
+    
     'Login in Google Drive': 'Iniciar sesión en Google Drive'.decode('utf8'),
 
     'Open the Gobstones\'s manual': 'Abre el manual de Gobstones',

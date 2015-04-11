@@ -17,9 +17,9 @@ def gobstones_folder():
     return os.path.join(user_path(), "gobstones")
 
 class FileOption(object):
-    DRIVE=None
+    DRIVE = None
     FILES_ACT = dict()
-    
+    TOKEN = None
     def __init__(self, mainWindow):        
         self.mainW = mainWindow
         self.moduleFile = None
@@ -334,12 +334,19 @@ class FileOption(object):
             filename = filename + '.gbs'
         return filename
 
-    def loginGoogleDrive(self):
-        
-        if  self.DRIVE is None:
+    def loginGoogleDrive(self,auto = None):
+        if  self.TOKEN is None:
             gauth = GoogleAuth()
             gauth.LocalWebserverAuth()
-            self.DRIVE= GoogleDrive(gauth)
+            self.TOKEN = GoogleDrive(gauth)
+            self.DRIVE = GoogleDrive(gauth)
+            self.mainW.ui.checkboxGoogleDrive.setChecked(True)
+            
+        if auto is True:
+            self.DRIVE = self.TOKEN
+        else:
+            self.DRIVE = None
+            
         
 
         

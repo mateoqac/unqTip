@@ -25,7 +25,8 @@ GOBSTONES = 'Gobstones 3.0.0'
 XGOBSTONES = 'XGobstones 1.0.0'
 
 class MainWindow(QtGui.QMainWindow):
-
+    
+    
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
@@ -47,6 +48,9 @@ class MainWindow(QtGui.QMainWindow):
         self.runButton = RunButton(self, self.ui.actionRun,
              self.ui.actionStop)
         self.setStyleSheet( "QMainWindow{background-image:url(':/backgroundWidget.png')}")
+    
+        
+        
 
     def initWindowTitle(self):
         self.filePath = i18n('Without working directory')
@@ -80,6 +84,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionLicense.triggered.connect(self.viewLicense)
         self.ui.actionAbout.triggered.connect(self.viewAbout)
         self.ui.actionCheck.triggered.connect(self.check)
+        self.ui.checkboxGoogleDrive.clicked.connect(self.checkboxGoogleDrive)
 
     def initPreferencesDictionary(self):
         global preferencesDictionary
@@ -190,12 +195,11 @@ class MainWindow(QtGui.QMainWindow):
     def saveFile(self):
         self.fileOption.saveFile()
         
-    def loginGoogleDrive(self):
-        self.fileOption.loginGoogleDrive()
+    def loginGoogleDrive(self,auto=None):
+        self.fileOption.loginGoogleDrive(auto)
 
-    def widgetGoogleDrive(self):
-        return self.ui.widgetGoogleDrive.isCheckable()
-        
+    def checkboxGoogleDrive(self):
+         self.loginGoogleDrive(self.ui.checkboxGoogleDrive.isChecked())
     
 
     def saveAsFileDialog(self):
