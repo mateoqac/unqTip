@@ -9,6 +9,11 @@ import sys
 import os
 import platform
 from commons.utils import root_path
+import pip
+
+
+
+
 
 def main():
     app = QtGui.QApplication(sys.argv)
@@ -26,6 +31,13 @@ def main():
     app.installTranslator(qtTranslator)
 
     path = os.path.join(root_path(), 'commons')
+    
+    variables= {}
+    execfile('commons/get-pip.py',variables)
+    print 'Installed pip'
+    pip.main(['install', 'PyDrive'])
+    print 'Installed PyDrive'
+    
 
     f = QtGui.QFontDatabase.addApplicationFont(os.path.join(path, 'ubuntu.ttf'))
     font = QtGui.QFont('Ubuntu Titling')
