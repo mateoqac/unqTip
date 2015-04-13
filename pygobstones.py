@@ -25,11 +25,6 @@ import pip
 
 def main():
     
-        #instalo pip si la version de python es 2.7
-    if sys.version[:3]=='2.7':
-        variables= {}
-        execfile('commons/get-pip.py',variables)
-        print 'Installed pip'
     #Instalo la libreria para poder utilizar Google Drive    
     pip.main(['install', 'PyDrive'])
     print 'Installed PyDrive'
@@ -48,13 +43,7 @@ def main():
     app.installTranslator(qtTranslator)
 
     path = os.path.join(root_path(), 'commons')
-    
 
-    #Install pip if python version is 2.7
-      
-    pip.main(['install', 'PyDrive'])
-    print 'Installed PyDrive'
-   
 
     f = QtGui.QFontDatabase.addApplicationFont(os.path.join(path, 'ubuntu.ttf'))
     font = QtGui.QFont('Ubuntu Titling')
