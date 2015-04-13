@@ -1,18 +1,35 @@
 #!/usr/bin/python
+
+
+import subprocess
+import sys
+import os
+import platform
+from commons.utils import root_path
+
+cmd = 'python commons/get-pip.py'
+p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+out, err = p.communicate() 
+result = out.split('\n')
+for lin in result:
+    if not lin.startswith('#'):
+        print(lin)
+
+
 from PyQt4 import QtGui, QtCore
 from gui.mainWindow import *
 from time import time, sleep
 from PyQt4.QtGui import QApplication, QSplashScreen, QPixmap
 from PyQt4.QtCore import QSize
 from PyQt4.QtSvg import QSvgWidget
-import sys
-import os
-import platform
-from commons.utils import root_path
 import pip
 
 
 def main():
+    
+    
+    
+    
     app = QtGui.QApplication(sys.argv)
 
     #Get the locale settings
@@ -29,12 +46,8 @@ def main():
 
     path = os.path.join(root_path(), 'commons')
     
-    #instalo pip si la version de python es 2.7
-    if sys.version[:3]=='2.7':
-        variables= {}
-        execfile('commons/get-pip.py',variables)
-        print 'Installed pip'
-    #Instalo la libreria para poder utilizar Google Drive    
+    #Install pip if python version is 2.7
+      
     pip.main(['install', 'PyDrive'])
     print 'Installed PyDrive'
     
