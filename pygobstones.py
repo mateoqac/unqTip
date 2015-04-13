@@ -26,10 +26,6 @@ import pip
 
 
 def main():
-    
-    
-    
-    
     app = QtGui.QApplication(sys.argv)
 
     #Get the locale settings
