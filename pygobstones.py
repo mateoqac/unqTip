@@ -13,6 +13,15 @@ import pip
 
 
 def main():
+    
+        #instalo pip si la version de python es 2.7
+    if sys.version[:3]=='2.7':
+        variables= {}
+        execfile('commons/get-pip.py',variables)
+        print 'Installed pip'
+    #Instalo la libreria para poder utilizar Google Drive    
+    pip.main(['install', 'PyDrive'])
+    print 'Installed PyDrive'
     app = QtGui.QApplication(sys.argv)
 
     #Get the locale settings
@@ -29,14 +38,7 @@ def main():
 
     path = os.path.join(root_path(), 'commons')
     
-    #instalo pip si la version de python es 2.7
-    if sys.version[:3]=='2.7':
-        variables= {}
-        execfile('commons/get-pip.py',variables)
-        print 'Installed pip'
-    #Instalo la libreria para poder utilizar Google Drive    
-    pip.main(['install', 'PyDrive'])
-    print 'Installed PyDrive'
+
     
 
     f = QtGui.QFontDatabase.addApplicationFont(os.path.join(path, 'ubuntu.ttf'))
