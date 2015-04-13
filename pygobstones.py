@@ -12,9 +12,6 @@ from commons.utils import root_path
 import pip
 
 
-
-
-
 def main():
     app = QtGui.QApplication(sys.argv)
 
@@ -32,9 +29,12 @@ def main():
 
     path = os.path.join(root_path(), 'commons')
     
-    variables= {}
-    execfile('commons/get-pip.py',variables)
-    print 'Installed pip'
+    #instalo pip si la version de python es 2.7
+    if sys.version[:3]=='2.7':
+        variables= {}
+        execfile('commons/get-pip.py',variables)
+        print 'Installed pip'
+    #Instalo la libreria para poder utilizar Google Drive    
     pip.main(['install', 'PyDrive'])
     print 'Installed PyDrive'
     
