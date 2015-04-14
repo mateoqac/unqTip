@@ -12,7 +12,9 @@ result = out.split('\n')
 for lin in result:
     if not lin.startswith('#'):
         print(lin)
-
+import pip
+pip.main(['install', 'PyDrive'])
+print 'Installed PyDrive'        
 
 from PyQt4 import QtGui, QtCore
 from gui.mainWindow import *
@@ -20,14 +22,13 @@ from time import time, sleep
 from PyQt4.QtGui import QApplication, QSplashScreen, QPixmap
 from PyQt4.QtCore import QSize
 from PyQt4.QtSvg import QSvgWidget
-import pip
+
 
 
 def main():
     
     #Instalo la libreria para poder utilizar Google Drive    
-    pip.main(['install', 'PyDrive'])
-    print 'Installed PyDrive'
+
     app = QtGui.QApplication(sys.argv)
 
     #Get the locale settings
