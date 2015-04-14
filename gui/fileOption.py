@@ -335,12 +335,13 @@ class FileOption(object):
         return filename
 
     def loginGoogleDrive(self,auto = None):
-        if  self.TOKEN is None:
+        if  self.TOKEN is None :
             gauth = GoogleAuth()
             gauth.LocalWebserverAuth()
             self.TOKEN = GoogleDrive(gauth)
             self.DRIVE = GoogleDrive(gauth)
             self.mainW.ui.checkboxGoogleDrive.setChecked(True)
+            auto=True
             
         if auto is True:
             self.DRIVE = self.TOKEN
