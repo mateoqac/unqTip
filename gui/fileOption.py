@@ -236,8 +236,14 @@ class FileOption(object):
                 body=self.mainW.ui.textEditFile.toPlainText().toUtf8()
                 modFile.write(body)
                 (filep, filen) = os.path.split(str(self.moduleFile))
-                if  self.DRIVE is not None:
-                    self.saveG(filen, body,self.FILES_ACT[filen])
+                try:
+                    self.FILES_ACT[filen]
+                except KeyError:
+                    if  self.DRIVE is not None:
+                        self.saveG(filen, body)
+                else:
+                    if  self.DRIVE is not None:
+                        self.saveG(filen, body,self.FILES_ACT[filen])
                 modFile.close()
                 self.mainW.ui.textEditFile.document().setModified(False)
                 return True
@@ -352,15 +358,16 @@ class FileOption(object):
 
         
     def saveG(self,title,body=None,idf=None):
-        if idf is None:
-            fileg = self.DRIVE.CreateFile({'title': title})
-            if body is None:
-                fileg.SetContentString('')
-            fileg.Upload()
-            self.FILES_ACT[title]=fileg['id']
-        else:
-            file_list = self.DRIVE.ListFile({'q': "title='{}' and trashed=false".format(title)}).GetList()
-            for file1 in file_list:
-                if file1['id']==idf:
-                    file1.SetContentString(str(body))
-                    file1.Upload()
+        if self.DRIVE is not None:        
+            if idf is None:
+                fileg = self.DRIVE.CreateFile({'title': title})
+                if body is None:
+                    fileg.SetContentString('')
+                fileg.Upload()
+                self.FILES_ACT[title]=fileg['id']
+            else:
+                file_list = self.DRIVE.ListFile({'q': "title='{}' and trashed=false".format(title)}).GetList()
+                for file1 in file_list:
+                    if file1['id']==idf:
+                        file1.SetContentString(str(body))
+                        file1.Upload()
