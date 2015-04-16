@@ -82,7 +82,7 @@ class FileOption(object):
             fileLibrary.write(i18n('-- New Library'))
             body = i18n('-- New Library')
             if self.DRIVE is not None:
-                self.saveG('Biblioteca.gbs',body)
+                self.saveG('Biblioteca.gbs', body)
             fileLibrary.close()
         fileLibrary = open('Biblioteca.gbs')
         self.libraryFile = os.path.abspath(str('Biblioteca.gbs'))

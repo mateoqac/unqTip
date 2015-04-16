@@ -16,7 +16,7 @@ ES = {
 
     'Save changes?': '¿Salvar cambios?'.decode('utf8'),
 
-    'View Results' : 'Mostrar Resultados',
+    'View Results': 'Mostrar Resultados',
 
     'The file %s was changed, Do you save changes?':
          'El archivo " %s " ha cambiado, ¿Desea guardar los cambios?'.decode('utf8'),
@@ -39,9 +39,9 @@ ES = {
     'Save as ...': 'Guardar Como ...',
 
     'Open Edit Board': 'Abrir Editor de Tableros',
-    
-    'Open from Google Drive' : 'Abrir desde Google Drive',
-    
+
+    'Open from Google Drive': 'Abrir desde Google Drive',
+
     'Open an existent file in Google Drive': 'Abre un archivo existente en Google Drive',
 
     'Untitled': 'Sin Título'.decode('utf8'),
@@ -106,9 +106,9 @@ ES = {
         'Chequea si el programa está bien formado'.decode('utf8'),
 
     'Manual': 'Manual',
-    
+
     'Save into': 'Guardando',
-    
+
     'Login in Google Drive': 'Iniciar sesión en Google Drive'.decode('utf8'),
 
     'Open the Gobstones\'s manual': 'Abre el manual de Gobstones',
@@ -154,7 +154,7 @@ ES = {
     'Final Board': 'Tablero Final',
 
     'Source Code': 'Código Fuente'.decode('utf8'),
-    
+
     'Return Values': 'Valores de retorno'.decode('utf8'),
 
     'Save Final Board': 'Guardar tablero final',
@@ -302,7 +302,7 @@ ES = {
     "Press a key to continue": 'Presione una tecla para continuar',
 
     "Processing a key, wait": 'Procesando tecla, espere',
-    
+
     'The file must be named "Library"': "El archivo debe llamarse 'Biblioteca'",
 
     "Board Editor": 'Editor de Tableros',
@@ -310,7 +310,7 @@ ES = {
     "Load from disk": 'Cargar desde disco',
 
     "Save board to disk": 'Guardar en disco',
-    
+
     "Save board to image": 'Guardar como imagen',
 
     "Open board options": 'Abrir opciones de tablero',
@@ -339,7 +339,7 @@ ES = {
     'User Options': 'Opciones de usuario',
 
     'height': 'altura',
-    
+
     'weight': 'ancho',
 
     'Board': 'Tablero',
@@ -350,7 +350,7 @@ ES = {
 
     'show line numbers': 'Mostrar números de linea'.decode('utf8'),
 
-    }
+}
 
 EN = {}
 
