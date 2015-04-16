@@ -8,10 +8,13 @@ from PyQt4.QtGui import QCheckBox
 import PyQt4
 import views.resources
 sys.path.append('..')
+sys.path.append('lib.')
 from commons.i18n import *
 from commons.utils import root_path, user_path, clothing_for_file_exists, clothing_dir_for_file
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
+
+
 
 def gobstones_folder():
     return os.path.join(user_path(), "gobstones")
