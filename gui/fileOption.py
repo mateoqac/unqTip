@@ -8,28 +8,26 @@ from PyQt4.QtGui import QCheckBox
 import PyQt4
 import views.resources
 sys.path.append('..')
-sys.path.append('lib.')
 from commons.i18n import *
 from commons.utils import root_path, user_path, clothing_for_file_exists, clothing_dir_for_file
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
-
+from lib_gb.pydrive.auth import GoogleAuth
+from lib_gb.pydrive.drive import GoogleDrive
 
 
 def gobstones_folder():
     return os.path.join(user_path(), "gobstones")
 
+
 class FileOption(object):
     DRIVE = None
     FILES_ACT = dict()
     TOKEN = None
-    def __init__(self, mainWindow):        
+
+    def __init__(self, mainWindow):
         self.mainW = mainWindow
         self.moduleFile = None
         self.libraryFile = None
         self.initGobstonesFolder()
-        
-        
 
     def initGobstonesFolder(self):
         if not os.path.exists(gobstones_folder()):
@@ -39,7 +37,7 @@ class FileOption(object):
         return self.moduleFile
 
     def setTabsNamesAndLabelButtonNameAndSetCurrentPathDirectory(self,
-         qStringFName):
+                                                                 qStringFName):
         (filepath, filename) = os.path.split(str(qStringFName))
         if self.isEqualDisk(filepath, self.mainW.rootDirectory) and self.is_subdir(filepath, self.mainW.rootDirectory):
             self.mainW.updateFilePath(
@@ -79,11 +77,11 @@ class FileOption(object):
             If not exist the Biblioteca.gbs , then create a new file library
         '''
         if not os.path.exists('Biblioteca.gbs'):
-            
+
             fileLibrary = open('Biblioteca.gbs', 'w')
             fileLibrary.write(i18n('-- New Library'))
-            body=i18n('-- New Library')
-            if  self.DRIVE is not None:
+            body = i18n('-- New Library')
+            if self.DRIVE is not None:
                 self.saveG('Biblioteca.gbs',body)
             fileLibrary.close()
         fileLibrary = open('Biblioteca.gbs')
@@ -96,18 +94,18 @@ class FileOption(object):
 
     def actionOpenFileGoogleDriveDialog(self):
         pass
-    
+
     def openFiles(self):
 
         if self.mainW.ui.textEditFile.document().isModified() or self.mainW.ui.textEditLibrary.document().isModified():
             val = QMessageBox.question(self.mainW, i18n('Warning!'),
-             i18n('There are unsaved files, to load a new module changes will be lost, continue?'),
-            QMessageBox.Yes, QMessageBox.Cancel)
+                                       i18n('There are unsaved files, to load a new module changes will be lost, continue?'),
+                                       QMessageBox.Yes, QMessageBox.Cancel)
             if val == QMessageBox.Cancel:
                 return
 
         filename = QtGui.QFileDialog.getOpenFileName(self.mainW, i18n('Open File'),
-        gobstones_folder(), '*.gbs')
+                                                     gobstones_folder(), '*.gbs')
         if not filename == PyQt4.QtCore.QString(''):
             if not self.wantOpenLibrary(filename):
                 self.moduleFile = filename
@@ -121,9 +119,9 @@ class FileOption(object):
                 fname.close()
             else:
                 QMessageBox.question(self.mainW, i18n('Error loading the file'),
-                     i18n('Must load a file different to library') + '\n'
-                           + i18n('If you want edit the library, use the corresponding tab'),
-                            QMessageBox.Ok)
+                                     i18n('Must load a file different to library') + '\n'
+                                     + i18n('If you want edit the library, use the corresponding tab'),
+                                     QMessageBox.Ok)
         self.createInitialsFoldersAndFiles()
         self.updateClothingOptions()
 
@@ -136,23 +134,23 @@ class FileOption(object):
         self.mainW.ui.menuSelectResultView.clear()
         self.filesNames = []
         for f in files:
-            fileName, fileExtension = os.path.splitext(os.path.join(path,f))
+            fileName, fileExtension = os.path.splitext(os.path.join(path, f))
             if fileExtension == '.xml':
                 self.filesNames.append(os.path.join(path, fileName))
 
         self.mapper = QtCore.QSignalMapper(self.mainW)
         self.actions = {}
         for fn in self.filesNames:
-            (filepath, filename) = os.path.split(fn)            
+            (filepath, filename) = os.path.split(fn)
             self.addClothing(fn, filename)
-        
-        self.addClothing('Gobstones', i18n('Gobstones Standard'))        
+
+        self.addClothing('Gobstones', i18n('Gobstones Standard'))
         self.addClothing('PixelBoard', i18n('Pixel Board'))
         self.mapper.mapped['QString'].connect(self.handleButton)
 
     def addClothing(self, clothing_filename, clothing_text):
         action = QtGui.QAction(clothing_text, self.mainW)
-        self.actions[clothing_filename] = action        
+        self.actions[clothing_filename] = action
         self.mapper.setMapping(action, clothing_filename)
         action.triggered.connect(self.mapper.map)
         self.mainW.ui.menuSelectResultView.addAction(action)
@@ -168,13 +166,12 @@ class FileOption(object):
         for file_name in self.filesNames:
             self.actions[str(file_name)].setIcon(QtGui.QIcon(":/empty.png"))
 
-
     def newFile(self):
 
         if self.mainW.ui.textEditFile.document().isModified():
             val = QMessageBox.question(self.mainW, i18n('Save changes?'),
-             i18n('The file %s was changed, Do you save changes?') % (self.mainW.ui.tabWidgetEditors.tabText(0)[3:]),
-            QMessageBox.Yes, QMessageBox.No, QMessageBox.Cancel)
+                                       i18n('The file %s was changed, Do you save changes?') % (self.mainW.ui.tabWidgetEditors.tabText(0)[3:]),
+                                       QMessageBox.Yes, QMessageBox.No, QMessageBox.Cancel)
             if val == QMessageBox.Yes:
                 self.saveFile()
             elif val == QMessageBox.Cancel:
@@ -188,9 +185,9 @@ class FileOption(object):
     def closeApp(self, event):
 
         if self.mainW.ui.textEditFile.document().isModified() or self.mainW.ui.textEditLibrary.document().isModified():
-                val = QMessageBox.question(self.mainW, i18n('Save changes?')
-                    , i18n('There are unsaved files, you want to close the application?'),
-                    QMessageBox.Yes, QMessageBox.No)
+                val = QMessageBox.question(self.mainW, i18n('Save changes?'),
+                                           i18n('There are unsaved files, you want to close the application?'),
+                                           QMessageBox.Yes, QMessageBox.No)
                 if val == QMessageBox.Yes:
                     event.accept()
                 else:
@@ -204,7 +201,7 @@ class FileOption(object):
         self.mainW.ui.textEditLibrary.clear()
         self.mainW.ui.tabWidgetEditors.setTabText(1, i18n('Empty'))
 
-    def closeFiles(self):        
+    def closeFiles(self):
         if (self.checkWasChangesInFiles() != QMessageBox.Cancel):
             self.clearCurrentModule()
             self.clearLibraryModule()
@@ -217,20 +214,19 @@ class FileOption(object):
     def checkWasChangesInFiles(self):
         if self.mainW.ui.textEditFile.document().isModified():
             val = QMessageBox.question(self.mainW, i18n('Save changes?'),
-             i18n('The file %s was changed, Do you save changes?') % (self.mainW.ui.tabWidgetEditors.tabText(0)[3:]),
-            QMessageBox.Yes, QMessageBox.No, QMessageBox.Cancel)
+                                       i18n('The file %s was changed, Do you save changes?') % (self.mainW.ui.tabWidgetEditors.tabText(0)[3:]),
+                                       QMessageBox.Yes, QMessageBox.No, QMessageBox.Cancel)
             if val == QMessageBox.Yes:
                 if not self.saveFile():
-                    return QMessageBox.Cancel          
+                    return QMessageBox.Cancel
         if self.mainW.ui.textEditLibrary.document().isModified():
             val = QMessageBox.question(self.mainW, i18n('Save changes?'),
-             i18n('The file %s was changed, Do you save changes?') % (self.mainW.ui.tabWidgetEditors.tabText(1)[3:]),
-            QMessageBox.Yes, QMessageBox.No, QMessageBox.Cancel)
+                                       i18n('The file %s was changed, Do you save changes?') % (self.mainW.ui.tabWidgetEditors.tabText(1)[3:]),
+                                       QMessageBox.Yes, QMessageBox.No, QMessageBox.Cancel)
             if val == QMessageBox.Yes:
                 if not self.saveFile():
-                    return QMessageBox.Cancel                
+                    return QMessageBox.Cancel
         return val
-            
 
     def saveFile(self):
         indexFile = self.mainW.ui.tabWidgetEditors.currentIndex()
@@ -239,17 +235,17 @@ class FileOption(object):
                 return self.saveAsFileDialog()
             else:
                 modFile = open(self.moduleFile, 'w')
-                body=self.mainW.ui.textEditFile.toPlainText().toUtf8()
+                body = self.mainW.ui.textEditFile.toPlainText().toUtf8()
                 modFile.write(body)
                 (filep, filen) = os.path.split(str(self.moduleFile))
                 try:
                     self.FILES_ACT[filen]
                 except KeyError:
-                    if  self.DRIVE is not None:
+                    if self.DRIVE is not None:
                         self.saveG(filen, body)
                 else:
-                    if  self.DRIVE is not None:
-                        self.saveG(filen, body,self.FILES_ACT[filen])
+                    if self.DRIVE is not None:
+                        self.saveG(filen, body, self.FILES_ACT[filen])
                 modFile.close()
                 self.mainW.ui.textEditFile.document().setModified(False)
                 return True
@@ -258,11 +254,11 @@ class FileOption(object):
                 return self.saveAsFileDialog()
             else:
                 modLibrary = open(self.libraryFile, 'w')
-                body=self.mainW.ui.textEditLibrary.toPlainText().toUtf8()
+                body = self.mainW.ui.textEditLibrary.toPlainText().toUtf8()
                 modLibrary.write(body)
                 (filep, filen) = os.path.split(str(self.libraryFile))
-                if  self.DRIVE is not None:
-                    self.saveG(filen, body,self.FILES_ACT[filen])
+                if self.DRIVE is not None:
+                    self.saveG(filen, body, self.FILES_ACT[filen])
                 modLibrary.close()
                 self.mainW.ui.textEditLibrary.document().setModified(False)
                 return True
@@ -270,41 +266,39 @@ class FileOption(object):
     def saveAsFileDialog(self):
         indexFile = self.mainW.ui.tabWidgetEditors.currentIndex()
         filename = QtGui.QFileDialog.getSaveFileName(self.mainW,
-            i18n('Save as ...'), gobstones_folder(), '*.gbs')
+                                                     i18n('Save as ...'), gobstones_folder(), '*.gbs')
         if filename == PyQt4.QtCore.QString(''):
             return False
         if indexFile == 0:
             (filep, filen) = os.path.split(str(filename))
             if filen == "Biblioteca.gbs" or filen == "Biblioteca":
                 QMessageBox.question(self.mainW, i18n('Error saving the file'),
-                    i18n('The file name do not be equals to library') + '\n'
-                        + i18n(''),
-                        QMessageBox.Ok)
+                                     i18n('The file name do not be equals to library') + '\n'
+                                     + i18n(''), QMessageBox.Ok)
                 return False
             else:
                 filename = self.addExtension(filename)
                 (filep, filen) = os.path.split(str(filename))
                 self.moduleFile = filename
                 myFile = open(filename, 'w')
-                body=self.mainW.ui.textEditFile.toPlainText().toUtf8()
+                body = self.mainW.ui.textEditFile.toPlainText().toUtf8()
                 myFile.write(body)
-                #add to save in Google Drive
-                if  self.DRIVE is not None:
-                    self.saveG(filen,body)
-                
+                # add to save in Google Drive
+                if self.DRIVE is not None:
+                    self.saveG(filen, body)
+
                 self.setCurrentPathDirectory(os.path.dirname(filename))
                 myFile.close()
                 self.mainW.ui.textEditFile.document().setModified(False)
                 self.setTabsNamesAndLabelButtonNameAndSetCurrentPathDirectory(filename)
                 self.loadLibrary()
-            
+
         if indexFile == 1:
             (filep, filen) = os.path.split(str(filename))
             if not filen.startswith('Biblioteca'):
                 QMessageBox.question(self.mainW, i18n('Error saving the file'),
-                    i18n('The file must be named "Library"') + '\n'
-                        + i18n(''),
-                        QMessageBox.Ok)
+                                     i18n('The file must be named "Library"') + '\n'
+                                     + i18n(''), QMessageBox.Ok)
                 return False
             elif not os.path.exists('Biblioteca.gbs'):
                 filename = self.addExtension(filename)
@@ -317,11 +311,9 @@ class FileOption(object):
                 self.mainW.ui.tabWidgetEditors.setTabText(1, self.addExtension(filen))
             else:
                 self.saveLibrary()
-        
-               
         self.createInitialsFoldersAndFiles()
         self.updateClothingOptions()
-        
+
         return True
 
     def createInitialsFoldersAndFiles(self):
@@ -330,13 +322,12 @@ class FileOption(object):
             os.makedirs(path)
             os.makedirs(os.path.join(path, 'Imagenes'))
 
-
     def saveLibrary(self):
         libFile = open(self.libraryFile, 'w')
-        body=self.mainW.ui.textEditLibrary.toPlainText().toUtf8()
+        body = self.mainW.ui.textEditLibrary.toPlainText().toUtf8()
         libFile.write(body)
-        if  self.DRIVE is not None:
-            self.saveG('Biblioteca.gbs',body)
+        if self.DRIVE is not None:
+            self.saveG('Biblioteca.gbs', body)
         libFile.close()
         self.mainW.ui.textEditLibrary.document().setModified(False)
 
@@ -346,34 +337,31 @@ class FileOption(object):
             filename = filename + '.gbs'
         return filename
 
-    def loginGoogleDrive(self,auto = None):
-        if  self.TOKEN is None :
+    def loginGoogleDrive(self, auto=None):
+        if self.TOKEN is None:
             gauth = GoogleAuth()
             gauth.LocalWebserverAuth()
             self.TOKEN = GoogleDrive(gauth)
             self.DRIVE = GoogleDrive(gauth)
             self.mainW.ui.checkboxGoogleDrive.setChecked(True)
-            auto=True
-            
+            auto = True
+
         if auto is True:
             self.DRIVE = self.TOKEN
         else:
             self.DRIVE = None
-            
-        
 
-        
-    def saveG(self,title,body=None,idf=None):
-        if self.DRIVE is not None:        
+    def saveG(self, title, body=None, idf=None):
+        if self.DRIVE is not None:
             if idf is None:
                 fileg = self.DRIVE.CreateFile({'title': title})
                 if body is None:
                     fileg.SetContentString('')
                 fileg.Upload()
-                self.FILES_ACT[title]=fileg['id']
+                self.FILES_ACT[title] = fileg['id']
             else:
                 file_list = self.DRIVE.ListFile({'q': "title='{}' and trashed=false".format(title)}).GetList()
                 for file1 in file_list:
-                    if file1['id']==idf:
+                    if file1['id'] == idf:
                         file1.SetContentString(str(body))
                         file1.Upload()
