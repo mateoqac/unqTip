@@ -39,6 +39,10 @@ ES = {
     'Save as ...': 'Guardar Como ...',
 
     'Open Edit Board': 'Abrir Editor de Tableros',
+    
+    'Open from Google Drive' : 'Abrir desde Google Drive',
+    
+    'Open an existent file in Google Drive': 'Abre un archivo existente en Google Drive',
 
     'Untitled': 'Sin Título'.decode('utf8'),
 

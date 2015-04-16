@@ -97,6 +97,8 @@ class Ui_MainWindow(object):
         self.menuEdit.setObjectName(_fromUtf8('menuEdit'))
         self.menuGobstones = QtGui.QMenu(self.menuBar)
         self.menuGobstones.setObjectName(_fromUtf8('menuGobstones'))
+        self.menuGoogleDrive = QtGui.QMenu(self.menuBar)
+        self.menuGoogleDrive.setObjectName(_fromUtf8('menuGoogleDrive'))
         self.menuBoard = QtGui.QMenu(self.menuBar)
         self.menuBoard.setObjectName(_fromUtf8('menuBoard'))
         self.menuSelectResultView = QtGui.QMenu(self.menuBoard)
@@ -105,6 +107,7 @@ class Ui_MainWindow(object):
         self.menuHelp = QtGui.QMenu(self.menuBar)
         self.menuHelp.setObjectName(_fromUtf8('menuHelp'))
         MainWindow.setMenuBar(self.menuBar)
+        
         self.actionChangeLang = QtGui.QAction(MainWindow)
         icon = QtGui.QIcon(":/logoGobstones.png")
         self.actionChangeLang.setIcon(icon)
@@ -122,6 +125,11 @@ class Ui_MainWindow(object):
         self.actionOpenFile.setIcon(icon1)
         self.actionOpenFile.setObjectName(_fromUtf8('actionOpenFile'))
         self.actionSave = QtGui.QAction(MainWindow)
+
+        self.actionOpenFileGoogleDrive = QtGui.QAction(MainWindow)
+        self.actionOpenFileGoogleDrive.setIcon(icon1)
+        self.actionOpenFileGoogleDrive.setObjectName(_fromUtf8('actionOpenFileGoogleDrive'))
+        
         icon2 = QtGui.QIcon(":/save.png")
         self.actionSave.setIcon(icon2)
         self.actionSave.setObjectName(_fromUtf8('actionSave'))
@@ -238,7 +246,6 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionManual)
         self.toolBar.addAction(self.actionAbout)
         self.toolBar.addSeparator()
-        #self.toolBar.addAction(self.actionGoogleDrive)
         self.toolBar.addWidget(self.checkboxGoogleDrive)
         
         self.menuFile.addSeparator()
@@ -247,7 +254,6 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.actionOpenFile)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSaveAs)
-        self.menuFile.addAction(self.actionGoogleDrive)
         self.menuFile.addAction(self.actionCloseFile)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
@@ -270,6 +276,10 @@ class Ui_MainWindow(object):
         self.menuGobstones.addAction(self.actionRun)
         self.menuGobstones.addAction(self.actionStop)
         self.menuGobstones.addAction(self.actionCheck)
+        self.menuGoogleDrive.addSeparator()
+        self.menuGoogleDrive.addAction(self.actionGoogleDrive)
+        self.menuGoogleDrive.addAction(self.actionOpenFileGoogleDrive)
+        self.menuGoogleDrive.addAction(self.actionSave)
         self.menuBoard.addSeparator()
         self.menuBoard.addAction(self.actionLoadBoard)
         self.menuBoard.addAction(self.actionBoardOptions)
@@ -283,6 +293,7 @@ class Ui_MainWindow(object):
         self.menuBar.addAction(self.menuFile.menuAction())
         self.menuBar.addAction(self.menuEdit.menuAction())
         self.menuBar.addAction(self.menuGobstones.menuAction())
+        self.menuBar.addAction(self.menuGoogleDrive.menuAction())
         self.menuBar.addAction(self.menuBoard.menuAction())
         self.menuBar.addAction(self.menuHelp.menuAction())
 
@@ -311,6 +322,8 @@ class Ui_MainWindow(object):
         self.menuEdit.setTitle(_translate('MainWindow', i18n('Edit'), None))
         self.menuGobstones.setTitle(_translate('MainWindow', 'Gobstones',
                                                              None))
+        self.menuGoogleDrive.setTitle(_translate('MainWindow', 'Google Drive',
+                                                             None))
         self.menuBoard.setTitle(_translate('MainWindow', i18n('Board'), None))
         self.menuSelectResultView.setTitle(_translate('MainWindow',
                                      i18n('Select view results'), None))
@@ -330,6 +343,12 @@ class Ui_MainWindow(object):
                                          i18n('Close the current file and the library'), None))
         self.actionCloseFile.setShortcut(_translate('MainWindow', 'Ctrl+R',
                                                                      None))
+        
+
+        self.actionOpenFileGoogleDrive.setText(_translate('MainWindow', i18n('Open from Google Drive'), None))
+        self.actionOpenFileGoogleDrive.setToolTip(_translate('MainWindow',
+                                     i18n('Open an existent file in Google Drive'), None))
+        
         self.actionOpenFile.setText(_translate('MainWindow', i18n('Open'), None))
         self.actionOpenFile.setToolTip(_translate('MainWindow',
                                      i18n('Open an existent file'), None))

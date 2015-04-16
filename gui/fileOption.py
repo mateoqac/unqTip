@@ -91,6 +91,9 @@ class FileOption(object):
         self.mainW.ui.textEditLibrary.setPlainText(data)
         fileLibrary.close()
 
+    def actionOpenFileGoogleDriveDialog(self):
+        pass
+    
     def openFiles(self):
 
         if self.mainW.ui.textEditFile.document().isModified() or self.mainW.ui.textEditLibrary.document().isModified():
