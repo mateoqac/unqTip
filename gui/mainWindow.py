@@ -85,7 +85,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionAbout.triggered.connect(self.viewAbout)
         self.ui.actionCheck.triggered.connect(self.check)
         self.ui.checkboxGoogleDrive.clicked.connect(self.checkboxGoogleDrive)
-        self.ui.actionOpenFileGoogleDrive.triggered.connect(self.actionOpenFileGoogleDriveDialog)
+        self.ui.actionOpenFileGoogleDrive.triggered.connect(self.OpenFileGoogleDrive)
     def initPreferencesDictionary(self):
         global preferencesDictionary
         preferencesDictionary = {'logger': False,
@@ -183,9 +183,9 @@ class MainWindow(QtGui.QMainWindow):
         '''
         self.fileOption.openFiles()
         
-    def actionOpenFileGoogleDriveDialog(self):
+    def OpenFileGoogleDrive(self):
         
-        self.fileOption.actionOpenFileGoogleDriveDialog()
+        self.fileOption.OpenFileGoogleDrive()
 
     def openNewFileDialog(self):
         self.fileOption.newFile()

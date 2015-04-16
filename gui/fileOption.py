@@ -92,7 +92,7 @@ class FileOption(object):
         self.mainW.ui.textEditLibrary.setPlainText(data)
         fileLibrary.close()
 
-    def actionOpenFileGoogleDriveDialog(self):
+    def OpenFileGoogleDrive(self):
         pass
 
     def openFiles(self):
