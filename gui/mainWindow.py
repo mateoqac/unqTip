@@ -369,7 +369,6 @@ class GUIInterpreterHandler(EjecutionFailureHandler, EjecutionHandler):
             self.interactiveW.initialStatus(self.partialBoard)
             self.interactiveW.show()
 
-
     def partial(self, board_str):
         self.interactiveW.setPressAKeyState()
         self.interactiveW.setBoard(board_str)

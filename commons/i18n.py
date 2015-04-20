@@ -48,6 +48,8 @@ ES = {
 
     'File': 'Archivo',
 
+    'Successfully is saved in Google Drive file named ': 'Se guardo con éxito en Google Drive el archivo '.decode('utf8'),
+
     'Edit': 'Editar',
 
     'Size': 'Tamaño',

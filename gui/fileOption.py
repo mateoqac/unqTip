@@ -365,3 +365,5 @@ class FileOption(object):
                     if file1['id'] == idf:
                         file1.SetContentString(str(body))
                         file1.Upload()
+        self.mainW.guiInterpreterHandler.showInLog(i18n('Successfully is saved in Google Drive file named ') +
+                                                   '{}'.format(title))
