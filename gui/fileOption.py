@@ -3,7 +3,7 @@ import os
 import sys
 from PyQt4 import QtGui
 from PyQt4 import QtCore
-from PyQt4.QtGui import QMessageBox
+from PyQt4.QtGui import QMessageBox, QWidget
 from PyQt4.QtGui import QCheckBox
 import PyQt4
 import views.resources

@@ -25,8 +25,7 @@ GOBSTONES = 'Gobstones 3.0.0'
 XGOBSTONES = 'XGobstones 1.0.0'
 
 class MainWindow(QtGui.QMainWindow):
-    
-    
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
@@ -236,7 +235,7 @@ class MainWindow(QtGui.QMainWindow):
               '-----------------')
         self.ui.logger.show()
         self.ui.actionStop.setEnabled(True)
-        self.ui.actionCheck.setEnabled(False)
+        #self.ui.actionCheck.setEnabled(False)
         self.ui.statusbar.showMessage(QtCore.QString(i18n('Processing...')))
         self.programRun.handler = self.guiInterpreterHandler
         self.runButton.start(self.programRun)
