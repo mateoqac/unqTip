@@ -24,6 +24,7 @@ import views.resources
 GOBSTONES = 'Gobstones 3.0.0'
 XGOBSTONES = 'XGobstones 1.0.0'
 
+
 class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
@@ -34,6 +35,8 @@ class MainWindow(QtGui.QMainWindow):
         self.initMenuBarActions()
         self.initSignalsAndSlots()
         self.ui.actionStop.setEnabled(False)
+        self.ui.actionOpenFileGoogleDrive.setEnabled(False)
+        self.ui.actionStop.setEnabled(False)
         self.clothing = 'Gobstones.xml'
         self.lang = GOBSTONES
         self.initWindowTitle()
@@ -42,14 +45,11 @@ class MainWindow(QtGui.QMainWindow):
         self.initialBoardGenerator = InitialBoardGenerator()
         self.guiInterpreterHandler = GUIInterpreterHandler(self)
         self.programRun = ProgramRun(self.getLang(),
-                                    self.guiInterpreterHandler)
+                                     self.guiInterpreterHandler)
         self.rootDirectory = root_path()
         self.runButton = RunButton(self, self.ui.actionRun,
-             self.ui.actionStop)
-        self.setStyleSheet( "QMainWindow{background-image:url(':/backgroundWidget.png')}")
-    
-        
-        
+                                   self.ui.actionStop)
+        self.setStyleSheet("QMainWindow{background-image:url(':/backgroundWidget.png')}")
 
     def initWindowTitle(self):
         self.filePath = i18n('Without working directory')
@@ -85,6 +85,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionCheck.triggered.connect(self.check)
         self.ui.checkboxGoogleDrive.clicked.connect(self.checkboxGoogleDrive)
         self.ui.actionOpenFileGoogleDrive.triggered.connect(self.OpenFileGoogleDrive)
+
     def initPreferencesDictionary(self):
         global preferencesDictionary
         preferencesDictionary = {'logger': False,
@@ -202,8 +203,7 @@ class MainWindow(QtGui.QMainWindow):
         self.fileOption.loginGoogleDrive(auto)
 
     def checkboxGoogleDrive(self):
-         self.loginGoogleDrive(self.ui.checkboxGoogleDrive.isChecked())
-    
+        self.loginGoogleDrive(self.ui.checkboxGoogleDrive.isChecked())
 
     def saveAsFileDialog(self):
         self.fileOption.saveAsFileDialog()
@@ -214,7 +214,6 @@ class MainWindow(QtGui.QMainWindow):
         self.editOption.initEditorBehavior()
         self.boardOption = BoardOption(self)
         self.helpOption = HelpOption(self)
-        
 
     def updateTextEditFileUI(self):
         self.editOption.updateEditUI(self.ui.textEditFile, 0)
@@ -235,7 +234,7 @@ class MainWindow(QtGui.QMainWindow):
               '-----------------')
         self.ui.logger.show()
         self.ui.actionStop.setEnabled(True)
-        #self.ui.actionCheck.setEnabled(False)
+        self.ui.actionCheck.setEnabled(False)
         self.ui.statusbar.showMessage(QtCore.QString(i18n('Processing...')))
         self.programRun.handler = self.guiInterpreterHandler
         self.runButton.start(self.programRun)

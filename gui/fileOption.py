@@ -93,7 +93,19 @@ class FileOption(object):
         fileLibrary.close()
 
     def OpenFileGoogleDrive(self):
-        pass
+
+        l = []
+        file_list = self.DRIVE.ListFile({'q': "title contains '.gbs' and trashed=false"}).GetList()
+        for f in file_list:
+            t = (f['title'], f['id'], f.GetContentString())
+            l.append(t)
+
+        model = ListGoogleDriveModel(l)
+        list_view = QtGui.QListView()
+        list_view.setWindowTitle('Google Drive')
+        list_view.setModel(model)
+        list_view.show()
+        self.mainW.ui.exec_()
 
     def openFiles(self):
 
@@ -344,10 +356,12 @@ class FileOption(object):
             self.TOKEN = GoogleDrive(gauth)
             self.DRIVE = GoogleDrive(gauth)
             self.mainW.ui.checkboxGoogleDrive.setChecked(True)
+            self.mainW.ui.actionOpenFileGoogleDrive.setEnabled(True)
             auto = True
 
         if auto is True:
             self.DRIVE = self.TOKEN
+
         else:
             self.DRIVE = None
 
@@ -367,3 +381,27 @@ class FileOption(object):
                         file1.Upload()
         self.mainW.guiInterpreterHandler.showInLog(i18n('Successfully is saved in Google Drive file named ') +
                                                    '{}'.format(title))
+
+
+class ListGoogleDriveModel(QtCore.QAbstractListModel):
+
+    def __init__(self, files, parent=None):
+        QtCore.QAbstractListModel.__init__(self, parent)
+        self.files = files
+
+    def rowCount(self, parent):
+        return len(self.files)
+
+    def data(self, index, role):
+        if role == QtCore.Qt.DisplayRole:
+
+            row = index.row()
+            value = self.files[row]
+
+            return value[0]
+
+
+
+
+
+

@@ -129,7 +129,7 @@ class Ui_MainWindow(object):
         self.actionOpenFileGoogleDrive = QtGui.QAction(MainWindow)
         self.actionOpenFileGoogleDrive.setIcon(icon1)
         self.actionOpenFileGoogleDrive.setObjectName(_fromUtf8('actionOpenFileGoogleDrive'))
-        
+
         icon2 = QtGui.QIcon(":/save.png")
         self.actionSave.setIcon(icon2)
         self.actionSave.setObjectName(_fromUtf8('actionSave'))
@@ -279,7 +279,6 @@ class Ui_MainWindow(object):
         self.menuGoogleDrive.addSeparator()
         self.menuGoogleDrive.addAction(self.actionGoogleDrive)
         self.menuGoogleDrive.addAction(self.actionOpenFileGoogleDrive)
-        self.menuGoogleDrive.addAction(self.actionSave)
         self.menuBoard.addSeparator()
         self.menuBoard.addAction(self.actionLoadBoard)
         self.menuBoard.addAction(self.actionBoardOptions)
@@ -343,12 +342,11 @@ class Ui_MainWindow(object):
                                          i18n('Close the current file and the library'), None))
         self.actionCloseFile.setShortcut(_translate('MainWindow', 'Ctrl+R',
                                                                      None))
-        
 
         self.actionOpenFileGoogleDrive.setText(_translate('MainWindow', i18n('Open from Google Drive'), None))
         self.actionOpenFileGoogleDrive.setToolTip(_translate('MainWindow',
                                      i18n('Open an existent file in Google Drive'), None))
-        
+
         self.actionOpenFile.setText(_translate('MainWindow', i18n('Open'), None))
         self.actionOpenFile.setToolTip(_translate('MainWindow',
                                      i18n('Open an existent file'), None))
