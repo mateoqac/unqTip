@@ -3,10 +3,12 @@ import os
 import sys
 from PyQt4 import QtGui
 from PyQt4 import QtCore
-from PyQt4.QtGui import QMessageBox, QWidget, QPushButton
+from PyQt4.QtGui import QMessageBox, QWidget, QPushButton, QDialog
 from PyQt4.QtGui import QCheckBox
 import PyQt4
 import views.resources
+from PyQt4.QtCore import QObject, SIGNAL, SLOT, pyqtSlot
+from gui.views.qDesigner.boardOptionWindow import Ui_Dialog
 sys.path.append('..')
 from commons.i18n import *
 from commons.utils import root_path, user_path, clothing_for_file_exists, clothing_dir_for_file
@@ -104,8 +106,7 @@ class FileOption(object):
         list_view = QtGui.QListView()
         list_view.setWindowTitle('Google Drive')
         list_view.setModel(model)
-        list_view.show()
-        self.mainW.ui.exec_()
+        QtGui.QFileDialog.getOpenFileName(self.mainW, list_view)
 
     def openFiles(self):
 

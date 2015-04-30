@@ -18,13 +18,13 @@ from PyQt4.QtSvg import QSvgWidget
 def main():
     app = QtGui.QApplication(sys.argv)
 
-    #Get the locale settings
+    # Get the locale settings
     locale = unicode(QtCore.QLocale.system().name())
 
     # This is to make Qt use locale configuration; i.e. Standard Buttons
     # in your system's language.
     qtTranslator = QtCore.QTranslator()
-    qtTranslator.load("qt_" + locale, 
+    qtTranslator.load("qt_" + locale,
                       QtCore.QLibraryInfo.location(QtCore.QLibraryInfo.TranslationsPath))
     app.installTranslator(qtTranslator)
 
