@@ -3,7 +3,8 @@ import os
 import sys
 from PyQt4 import QtGui
 from PyQt4 import QtCore
-from PyQt4.QtGui import QMessageBox, QWidget, QPushButton, QDialog
+from PyQt4.QtGui import QMessageBox, QWidget, QPushButton, QDialog,\
+    QAbstractItemView
 from PyQt4.QtGui import QCheckBox
 import PyQt4
 import views.resources
@@ -94,7 +95,10 @@ class FileOption(object):
         self.mainW.ui.textEditLibrary.setPlainText(data)
         fileLibrary.close()
 
-    def OpenFileGoogleDrive(self):
+    def OpenFileGoogleDrive(self, filename, boby):
+        self.loadGoogleDriveFiles()
+
+    def loadGoogleDriveFiles(self):
 
         l = []
         file_list = self.DRIVE.ListFile({'q': "title contains '.gbs' and trashed=false"}).GetList()
@@ -106,7 +110,17 @@ class FileOption(object):
         list_view = QtGui.QListView()
         list_view.setWindowTitle('Google Drive')
         list_view.setModel(model)
-        QtGui.QFileDialog.getOpenFileName(self.mainW, list_view)
+
+        dialog = QtGui.QDialog(self.mainW)
+        dialog.setWindowTitle('Open File')
+        layout_list = QtGui.QVBoxLayout()
+        layout_list.addWidget(list_view)
+        dialog.setLayout(layout_list)
+        button_list = QPushButton(QtCore.QString(i18n('Open File')))
+
+        layout_list.addWidget(button_list)
+        if dialog.exec_() == QtGui.QDialog.Accepted:
+            pass
 
     def openFiles(self):
 
